@@ -8,7 +8,7 @@ class InvoiceController():
         if invoice:
             return jsonify({"Message": "Invoice already exists"}), 400
         
-        invoice = Invoice(id=invoice_id, invoiceNumber = data["invoiceNumber"], customerName = data["customerName"],\
+        invoice = Invoice(id=invoice_id, date=data["date"], invoiceNumber = data["invoiceNumber"], customerName = data["customerName"],\
                           billingAddress = data["billingAddress"], shippingAddress=data["shippingAddress"],\
                             gstIn=data["gstIn"], totalAmount=data["totalAmount"])
         db.session.add(invoice)
@@ -34,6 +34,7 @@ class InvoiceController():
         if not invoice:
             return jsonify({"Message": "Invoice not found"}), 404
         invoice.invoiceNumber = data["invoiceNumber"]
+        invoice.date=data["date"]
         invoice.customerName = data["customerName"]
         invoice.billingAddress = data["billingAddress"]
         invoice.shippingAddress= data["shippingAddress"]
@@ -99,6 +100,7 @@ class InvoiceController():
 def get_invoice_dict(invoice):
     invoice_data = {
         "id": invoice.id,
+        "date": invoice.date.strftime('%Y-%m-%d %H:%M:%S') if invoice.date else "" ,
         "invoiceNumber" : invoice.invoiceNumber,
         "customerName" : invoice.customerName,
         "billingAddress" : invoice.billingAddress,

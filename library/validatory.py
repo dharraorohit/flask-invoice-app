@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class InvoiceValidator():
     def __init__(self, invoice_id, invoice_data):
         self.invoice_data = invoice_data
@@ -39,9 +41,14 @@ class InvoiceValidator():
 
     def validateInvoiceRequest(self):
         data = self.invoice_data
+        try:
+            datetime_object = datetime.strptime(data["date"], '%Y-%m-%d %H:%M:%S')
+        except:
+            raise ValueError("datetime format issue")
 
         invoice_data = {
             "id" : self.invoice_id,
+            "date" : datetime_object,
             "invoiceNumber" : data["invoiceNumber"], 
             "customerName" : data["customerName"],
             "billingAddress" : data["billingAddress"], 

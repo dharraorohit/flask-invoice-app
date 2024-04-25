@@ -52,6 +52,8 @@ def create_invoice(current_user, invoice_id):
         invoice_data = validator.validateInvoiceRequest()
     except KeyError as e:
         return jsonify({"Message": "Bad request, Value missing: {}".format(e) }), 400
+    except ValueError as e:
+        return jsonify({"Message": "Bad request, {}".format(e)}), 400
 
     errors = validator.validateInvoice()
     if len(errors):
@@ -69,6 +71,8 @@ def update_invoice(current_user, invoice_id):
         invoice_data = validator.validateInvoiceRequest()
     except KeyError as e:
         return jsonify({"Message": "Bad request, Value missing: {}".format(e) }), 400
+    except ValueError as e:
+        return jsonify({"Message": "Bad request, {}".format(e)}), 400
 
     errors = validator.validateInvoice()
     if len(errors):
