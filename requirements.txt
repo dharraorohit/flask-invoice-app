@@ -1,0 +1,11 @@
+flask
+flask-restful
+python-dotenv
+flask-sqlalchemy
+flask-cors
+flask-jwt-extended
+requests
+pyjwt == 2.1.0
+datetime
+uuid
+Flask-Migrate
